@@ -17,31 +17,25 @@ class User(Base):
     email= Column(String(200))
     password= Column(String(200))
 
-class Planets(Base):
-    __tablename__ = 'planets'
+class Media(Base):
+    __tablename__ = 'media'
     id = Column(Integer, primary_key=True)
-    name= Column(String(80))
-    description= Column(String(250))
-    diameter = Column(Integer)
-    rotation_period = Column(Integer)
-    orbital_period = Column(Integer)
-    climate = Column(String(80))
-    terrain = Column(String(80))
+    content = Column(String(200), nullable=False)
+    url= Column(String(250))
+    post_id= Column(Integer, ForeignKey('post.id'))
 
-class Characters(Base):
-    __tablename__ = 'characters'
+class Post(Base):
+    __tablename__ = 'post'
     id = Column(String(60), primary_key=True)
-    name= Column(String(60))
-    description= Column(String(250))
-    gender= Column(String(60))
-    mass= Column(Integer)
-
-class Favorites(Base):
-    __tablename__ = 'favorites'
-    id = Column(Integer, primary_key=True)
     user_id= Column(Integer, ForeignKey('user.id'))
-    character_id= Column(Integer, ForeignKey('characters.id'))
-    planet_id= Column(Integer, ForeignKey('planets.id'))
+
+
+class Comment(Base):
+    __tablename__ = 'comment'
+    id = Column(Integer, primary_key=True)
+    description= Column(String(25000))
+    user_id= Column(Integer, ForeignKey('user.id'))
+    post_id= Column(Integer, ForeignKey('post.id'))
 
 
 ## Draw from SQLAlchemy base
